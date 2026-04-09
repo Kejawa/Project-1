@@ -1,17 +1,32 @@
-FROM node:10-alpine
+# Stage 1: dependancies
+FROM node:20-alpine AS deps
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-WORKDIR /home/node/app
+WORKDIR /app
 
 COPY package*.json ./
 
-USER node
+RUN npm ci --only=production
 
-RUN npm install
 
-COPY --chown=node:node . .
+# Stage 1: production
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Run as non-root user
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+USER appuser
+
+# Copy deps 
+COPY --from=deps --chown=appuser:appgroup /app/node_modules ./node_modules
+
+COPY --chown=appuser:appgroup . . 
 
 EXPOSE 8080
+
+# HealthCheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+CMD wget -qO- http://217.76.61.226:8080/health || exit 1
 
 CMD [ "node", "app.js" ]
