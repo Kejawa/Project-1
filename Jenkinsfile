@@ -83,7 +83,7 @@ pipeline {
                 sh """
                     docker compose down --remove-orphans || true
                     docker compose pull
-                    docker compose up -d
+                    docker compose up --env-file .env -d
                     docker image prune -f
                 """
             }

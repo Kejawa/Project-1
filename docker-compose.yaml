@@ -23,8 +23,9 @@ services:
 # # Node.js
   app:
     build:
-      context: .
-      dockerfile: Dockerfile
+      # context: .
+      # dockerfile: Dockerfile
+      image: ${APP_IMAGE}
     container_name: app
     restart: unless-stopped
     environment:
