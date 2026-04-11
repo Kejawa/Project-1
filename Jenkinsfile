@@ -39,16 +39,15 @@ pipeline {
 
         // trivy scan -------- fail pipeline if critical CVE is found.
         // produce report in json format as build artifact.
+        // trivy image \
+        //                 --exit-code 1 \
+        //                 --severity CRITICAL \
+        //                 --quiet \
+        //                 --format table \
+        //                 ${IMAGE_NAME}:${IMAGE_TAG}
         stage('Trivy Security Scan') {
             steps{
                 sh """
-                    trivy image \
-                        --exit-code 1 \
-                        --severity CRITICAL \
-                        --quiet \
-                        --format table \
-                        ${IMAGE_NAME}:${IMAGE_TAG}
-
                     trivy image \
                         exit code 0 \
                         --severity LOW, HIGH,CRITICAL \
