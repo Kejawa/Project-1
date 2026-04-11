@@ -38,7 +38,7 @@ pipeline {
         }
 
         // trivy scan -------- fail pipeline if critical CVE is found.
-        // produce report in json format as build artifact
+        // produce report in json format as build artifact.
         stage('Trivy Security Scan') {
             steps{
                 sh """
@@ -60,8 +60,8 @@ pipeline {
         post {
             always{
                 archiveArtifacts artifacts: 'trivy-report.json' allowEmptyArchive: true
-                // Normally, a build fails if archiving returns zero artifacts. This option allows
-                // the archiving process to return nothing without failing the build. Instead, the build show a warning.
+                // Normally, a build fails if archiving returns zero artifacts. This option allows the
+                // archiving process to return nothing without failing the build. Instead, the build show a warning.
             }
         }
 
