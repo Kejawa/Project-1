@@ -59,7 +59,7 @@ pipeline {
         }
         post {
             always{
-                archiveArtifacts artifacts: 'trivy-report.json' allowEmptyArchive: true
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'trivy-report.json'
                 // Normally, a build fails if archiving returns zero artifacts. This option allows the
                 // archiving process to return nothing without failing the build. Instead, the build show a warning.
             }
