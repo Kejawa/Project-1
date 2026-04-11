@@ -50,7 +50,7 @@ pipeline {
                 sh """
                     trivy image \
                         --exit-code 0 \
-                        --severity LOW, HIGH,CRITICAL \
+                        --severity LOW,HIGH,CRITICAL \
                         --format json -o trivy-report.json\
                         ${IMAGE_NAME}:${IMAGE_TAG}    
                 """
