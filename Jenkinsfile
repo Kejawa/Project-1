@@ -49,7 +49,7 @@ pipeline {
                         --format table \
                         ${IMAGE_NAME}:${IMAGE_TAG}
 
-                    trivy image \ 
+                    trivy image \
                         exit code 0 \
                         --severity LOW, HIGH,CRITICAL \
                         --format json -o trivy-report.json\
@@ -81,7 +81,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-
+                    docker compose down --remove-orphans || true
+                    docker compose pull
+                    docker compose up -d
+                    docker image prune -f
                 """
             }
         }
