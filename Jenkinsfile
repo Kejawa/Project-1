@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh 'echo "Branch $GIT_BRANCH | Commit: $GIT_COMMIT'
+                sh 'echo "Branch $GIT_BRANCH | Commit: $GIT_COMMIT"'
             }
         }
 
