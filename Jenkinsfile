@@ -70,7 +70,7 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 sh """
-                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u "${DOCKERHUB_CREDENTIALS_USR}" --password-stdin
+                    echo "${DOCKERHUB_CREDENTIALS_PSW}" | docker login -u "${DOCKERHUB_CREDENTIALS_USR}" --password-stdin
                     docker push ${IMAGE_NAME}:${IMAGE_TAG} \
                     docker push ${IMAGE_NAME}:latest
                 """
