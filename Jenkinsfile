@@ -81,13 +81,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    ssh temi@217.76.61.226 '
+                    ssh -o StrictHostKeyChecking=no temi@217.76.61.226 '
                         cd ~/devops-pj/project-1 &&
                         docker compose down --remove-orphans || true
                         docker compose pull &&
                         docker compose up -d &&
                         docker image prune -f
-                    '    
+                    '
                 """
             }
         }
