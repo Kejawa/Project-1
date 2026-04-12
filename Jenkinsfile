@@ -81,10 +81,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    docker compose down --remove-orphans || true
-                    docker compose pull
-                    docker compose up --env-file .env -d
-                    docker image prune -f
+                    ssh temi@217.76.61.226 '
+                        cd ~/devops-pj/project-1 &&
+                        docker compose down --remove-orphans || true
+                        docker compose pull &&
+                        docker compose up -d &&
+                        docker image prune -f
+                    '    
                 """
             }
         }
