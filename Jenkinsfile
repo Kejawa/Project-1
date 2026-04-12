@@ -82,7 +82,7 @@ pipeline {
             steps {
                 sshagent(['deploy-creds']) {
                     sh """
-                        ssh temi@217.76.61.226 '
+                        ssh  -o StrictHostKeyChecking=no temi@217.76.61.226 '
                             set -e
                             cd ~/devops-pj/project-1
                             docker compose down --remove-orphans || true
