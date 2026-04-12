@@ -30,7 +30,7 @@ services:
     container_name: app
     restart: unless-stopped
     environment:
-      MODE_ENV: production
+      NODE_ENV: production
       PORT: 8080
       MONGO_USERNAME: ${MONGO_USERNAME}
       MONGO_PASSWORD: ${MONGO_PASSWORD}

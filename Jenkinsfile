@@ -77,16 +77,21 @@ pipeline {
             }
         }
 
-        // Deploy
+        // Deploy. set -e means stop execution if any commands fail
         stage('Deploy') {
             steps {
-                sh """
-                        docker compose down --remove-orphans || true
-                        docker compose pull &&
-                        docker compose up -d &&
-                        docker image prune -f
-                    '
-                """
+                sshagent(['deploy-creds']) {
+                    sh """
+                        ssh temi@217.76.61.226 '
+                            set -e
+                            cd ~/devops-pj/project-1
+                            docker compose down --remove-orphans || true
+                            docker compose pull
+                            docker compose up -d
+                            docker image prune -f
+                        '    
+                    """
+                }
             }
         }
     }
