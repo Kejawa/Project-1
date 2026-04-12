@@ -81,8 +81,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    ssh -o StrictHostKeyChecking=no temi@217.76.61.226 '
-                        cd ~/devops-pj/project-1 &&
                         docker compose down --remove-orphans || true
                         docker compose pull &&
                         docker compose up -d &&
