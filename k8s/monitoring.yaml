@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nodeapp-monitor
+  namespace: monitoring
+  labels:
+    release: my-kube-prometheus-stack
+spec:
+  namespaceSelector:    # prom. monitors this ns
+    matchNames:
+      - nodeapp
+  selector:
+    matchLabels:    #prometh find a service with this label to target
+      app: nodeapp
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s                  

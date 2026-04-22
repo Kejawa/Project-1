@@ -1,1 +1,9 @@
-Project code for tutorial on integrating MongoDB into Node.js application using Mongoose: https://www.digitalocean.com/community/tutorials/how-to-integrate-mongodb-with-your-node-application
+# Project 1 - CI/CD Pipeline with Docker, Trivy, Jenkins
+
+> Automated build, security scan, push and deployment pipeline for Node.js & MongoDB application on a self hosted Linux(Ubuntu) server
+
+## Architecture
+
+Developer pushs to Github
+        |
+Github Webhook 

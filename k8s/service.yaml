@@ -1,0 +1,29 @@
+# App Service - ClusterIP {internal only}
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp-svc
+  namespace: nodeapp
+  labels:
+    app: nodeapp
+spec:
+  selector:
+    app: nodeapp
+  ports: 
+  - name: http
+    port: 80
+    targetPort: 8080
+
+---
+#   MongoDB Service - ClusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: nodeapp
+spec:
+  selector:
+    app: mongo
+  ports:
+  - port: 27017
+    targetPort: 27017         
