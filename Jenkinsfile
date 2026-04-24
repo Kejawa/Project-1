@@ -78,18 +78,35 @@ pipeline {
         }
 
         // Deploy. set -e means stop execution if any commands fail
-        stage('Deploy') {
+        // stage('Deploy') {
+        //     steps {
+        //         sshagent(['deploy-creds']) {
+        //             sh """
+        //                 ssh  -o StrictHostKeyChecking=no temi@217.76.61.226 '
+        //                     set -e
+        //                     cd ~/devops-pj/project-1
+        //                     docker compose down --remove-orphans || true
+        //                     docker compose pull
+        //                     docker compose up -d
+        //                     docker image prune -f
+        //                 '    
+        //             """
+        //         }
+        //     }
+        // }
+
+        stage('Deploy To K8s') {
             steps {
                 sshagent(['deploy-creds']) {
                     sh """
-                        ssh  -o StrictHostKeyChecking=no temi@217.76.61.226 '
+                        ssh -o StrictHostKeyChecking=no temi@217.76.61.226 '
                             set -e
-                            cd ~/devops-pj/project-1
-                            docker compose down --remove-orphans || true
-                            docker compose pull
-                            docker compose up -d
-                            docker image prune -f
-                        '    
+                            cd ~/devops-pj/project-1/k8s
+                            k set image deployment/nodeapp \
+                                nodeapp=${IMAGE_NAME}:${IMAGE_TAG} \
+                                    -n nodeapp
+                            k rollout status deployment/nodeapp -n nodeapp --timeout=125s
+                        '
                     """
                 }
             }
