@@ -67,3 +67,6 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "250m"
+
+# Mi - Mebibytes
+# m - millicores. 1000m = 1 full CPU core      
