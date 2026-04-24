@@ -102,10 +102,10 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no temi@217.76.61.226 '
                             set -e
                             cd ~/devops-pj/project-1/k8s
-                            k set image deployment/nodeapp \
+                            kubectl set image deployment/nodeapp \
                                 nodeapp=${IMAGE_NAME}:${IMAGE_TAG} \
                                     -n nodeapp
-                            k rollout status deployment/nodeapp -n nodeapp --timeout=125s
+                            kubectl rollout status deployment/nodeapp -n nodeapp --timeout=125s
                         '
                     """
                 }
